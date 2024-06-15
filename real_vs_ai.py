@@ -2,6 +2,7 @@ import streamlit as st
 import tensorflow as tf
 import time
 import pandas as pd
+import random
 
 my_data = {}
 my_data['image'] = []
@@ -11,7 +12,9 @@ if 'results' not in st.session_state:
 if 'images' not in st.session_state:
     st.session_state['images'] = []
 
-model = tf.keras.models.load_model("real_vs_ai_model_limitless.h5", compile = False)
+model1 = tf.keras.models.load_model("real_vs_ai_model_limitless.h5", compile = False)
+model2 = tf.keras.models.load_model("Model_lakshay.h5", compile = False)
+val = random.choice([0,1])
 
 st.title("***Analyze Images***")
 
@@ -47,7 +50,12 @@ if st.session_state['image'] is not None:
         image_rgb = tf.image.convert_image_dtype(image_tensor, tf.uint8)
         image_save = tf.reshape(image_rgb, [32, 32, 3]).numpy()
         image_test = tf.reshape(image_rgb, [1,32, 32, 3]).numpy()
-        image_test = image_test/(255/2) - 1
+        if val is 1:
+            model = model1
+            image_test = image_test/(255/2) - 1
+        else:
+            model = model2
+            image = image_test/255
         with st.spinner("please wait"):
             time.sleep(3)
         if model.predict(image_test) > 0.5:
