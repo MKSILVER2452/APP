@@ -3,6 +3,7 @@ import tensorflow as tf
 import time
 import pandas as pd
 import random
+from  math import floor
 
 my_data = {}
 my_data['image'] = []
@@ -52,6 +53,7 @@ if st.session_state['image'] is not None:
         image_tensor = tf.io.decode_image(st.session_state['image'].read(), channels=3)
         st.write(image_tensor.shape)
         image_tensor = tf.image.resize(image_tensor , [32,32])
+        image_tensor = tf.cast(image_tensor, tf.uint8)
         st.write(image_tensor.shape)
         st.write(image_tensor.dtype)
         image_rgb = tf.image.convert_image_dtype(image_tensor, tf.uint8)
