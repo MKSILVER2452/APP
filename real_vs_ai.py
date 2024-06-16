@@ -54,9 +54,11 @@ if st.session_state['image'] is not None:
         if val is 1:
             model = model1
             image_test = image_test/(255/2) - 1
+            val = 0
         else:
             model = model2
             image = image_test/255
+            val = 1
         with st.spinner("please wait"):
             time.sleep(3)
         if model.predict(image_test) > 0.5:
