@@ -15,7 +15,7 @@ if 'images' not in st.session_state:
     
 if 'model1' not in st.session_state:
     st.session_state['model1'] = tf.keras.models.load_model("real_vs_ai_model_limitless.h5", compile = False)
-if 'model1' not in st.session_state:
+if 'model2' not in st.session_state:
     st.session_state['model2'] = tf.keras.models.load_model("Model_lakshay.h5", compile = False)
 val = random.choice([0,1])
 
@@ -50,7 +50,7 @@ if st.session_state['image'] is not None:
         st.image(st.session_state['image'])
         st.header("Your image is: ")
         image_tensor = tf.io.decode_image(st.session_state['image'].read(), channels=3)
-        image_tensor = tf.image.resize(image_tensor , [32,32])
+        #image_tensor = tf.image.resize(image_tensor , [32,32])
         image_rgb = tf.image.convert_image_dtype(image_tensor, tf.uint8)
         image_save = tf.reshape(image_rgb, [32, 32, 3]).numpy()
         image_test = tf.reshape(image_rgb, [1,32, 32, 3]).numpy()
