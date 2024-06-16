@@ -52,6 +52,8 @@ if st.session_state['image'] is not None:
         image_tensor = tf.io.decode_image(st.session_state['image'].read(), channels=3)
         st.write(image_tensor.shape)
         image_tensor = tf.image.resize(image_tensor , [32,32])
+        st.write(image_tensor.shape)
+        st.write(image_tensor.dtype)
         image_rgb = tf.image.convert_image_dtype(image_tensor, tf.uint8)
         image_save = tf.reshape(image_rgb, [32, 32, 3]).numpy()
         image_test = tf.reshape(image_rgb, [1,32, 32, 3]).numpy()
